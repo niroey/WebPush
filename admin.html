@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>웹푸시 관리자</title>
+</head>
+<body>
+  <h2>푸시 메시지 발송</h2>
+  <label>제목: <input type="text" id="title" placeholder="알림 제목"></label><br><br>
+  <label>내용: <input type="text" id="body" placeholder="메시지 내용"></label><br><br>
+  <button id="sendBtn">발송</button>
+
+  <script>
+    document.getElementById("sendBtn").addEventListener("click", async () => {
+      const title = document.getElementById("title").value;
+      const body = document.getElementById("body").value;
+      if (!title || !body) return alert("제목과 내용을 입력해주세요!");
+
+      const res = await fetch("/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, body })
+      });
+
+      if (res.ok) alert("푸시 발송 완료!");
+      else alert("푸시 발송 실패");
+    });
+  </script>
+</body>
+</html>
